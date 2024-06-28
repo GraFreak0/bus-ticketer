@@ -1,6 +1,11 @@
 <?php
-session_start();
+// error_reporting(E_ALL); 
+// ini_set('display_errors', 1);
 include("pages/generate.php");
+include("pages/init.php");
+
+// Check if the user is logged in
+checkLoggedIn();
 
 // Function to check if current time is between 5:00 PM and 7:00 PM
 function isPlatformAccessible() {
@@ -8,7 +13,7 @@ function isPlatformAccessible() {
     $target_time_start = new DateTime();
     $target_time_start->setTime(17, 0, 0); // Set target time to 5:00 PM
     $target_time_end = new DateTime();
-    $target_time_end->setTime(19, 0, 0); // Set target time to 7:00 PM
+    $target_time_end->setTime(23, 0, 0); // Set target time to 7:00 PM
 
     return ($current_time >= $target_time_start && $current_time <= $target_time_end);
 }
@@ -47,7 +52,7 @@ if ($current_time > $target_time_end) {
     <meta property="og:image" content="/images/title-icon.jpg">
     <meta property="og:url" content="https://bus-ticket.rf.gd/index.php">
     <link rel="icon" href="/images/logo.jpg" type="image/gif" />
-    <title> Ijaiye | BusApp</title>
+    <title>Ijaiye | BusApp</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-8K7ZVZPkhG2VJQ9s/Adk65l67xw8J9hchxTWaPCv9V0W+v7JrM7yA0ZJjAVQfNW6RNwV5V6QujwTnC0w06yMzA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -56,19 +61,17 @@ if ($current_time > $target_time_end) {
 <body>
     <div class="container">
         <header class="header">
-            <h1>Ijaiye Bus Ticketing App</h1>
+            <h1>Ijaiye Bus Ticketing</h1>
         </header>
         <h2>Ticket Generator</h2>
         <?php if (!$platform_accessible): ?>
             <p>The platform will be accessible after 5:00 PM. Please check back later.</p>
         <?php else: ?>
-            <?php if ($code_generated_today): ?>
-                <p>You have already generated a code today: <?= htmlspecialchars($code_generated) ?>. Please try again tomorrow.</p>
+            <?php if (isset($_SESSION['code_generated_today']) && $_SESSION['code_generated_today'] == date("Y-m-d")): ?>
+                <p>You have already generated a code today. Please try again tomorrow.</p>
             <?php else: ?>
                 <form id="generateForm" action="pages/generate.php" method="POST">
-                    <input type="text" id="name" name="name" placeholder="Enter your name" required <?php if (!$platform_accessible) echo 'disabled'; ?>>
-                    <input type="hidden" id="deviceIp" name="device_ip">
-                    <button type="submit" class="button" <?php if (!$platform_accessible) echo 'disabled'; ?>>Generate Code</button>
+                    <button type="submit" class="button">Generate Code</button>
                 </form>
             <?php endif; ?>
         <?php endif; ?>
@@ -105,29 +108,16 @@ if ($current_time > $target_time_end) {
     <script>
         // Function to enable or disable form based on platform accessibility
         function toggleFormAccessibility(accessible) {
-            var form = document.getElementById('generateForm');
-            var nameInput = document.getElementById('name');
-            var submitButton = form.querySelector('button[type="submit"]');
-
+            var submitButton = document.querySelector('button[type="submit"]');
             if (accessible) {
-                nameInput.removeAttribute('disabled');
                 submitButton.removeAttribute('disabled');
             } else {
-                nameInput.setAttribute('disabled', 'disabled');
                 submitButton.setAttribute('disabled', 'disabled');
             }
         }
 
         // Update form accessibility initially
         toggleFormAccessibility(<?= $platform_accessible ? 'true' : 'false' ?>);
-
-        // Fetch IP address and update form accessibility based on platform state
-        $.getJSON('https://api.ipify.org?format=json', function(data) {
-            $('#deviceIp').val(data.ip);
-            toggleFormAccessibility(<?= $platform_accessible ? 'true' : 'false' ?>); // Ensure form state matches platform state
-        });
-
-        // Countdown timer script (moved to countdown.js for better separation of concerns)
     </script>
 </body>
 </html>

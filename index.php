@@ -1,10 +1,25 @@
+<?php
+session_start();
+
+// Redirect to login.php if the user is not logged in
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit;
+}
+
+include("pages/init.php");
+
+// Check if the user is logged in
+checkLoggedIn();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/logo.jpg" type="image/gif" />
-    <title> Ijaiye | BusApp</title>
+    <title> Homepage | BusApp</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-8K7ZVZPkhG2VJQ9s/Adk65l67xw8J9hchxTWaPCv9V0W+v7JrM7yA0ZJjAVQfNW6RNwV5V6QujwTnC0w06yMzA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -13,9 +28,7 @@
         <header class="header">
             <h1>BusApp</h1>
             <nav>
-                <ul>
-                    <li><a href="pages/logout.php" class="logout-btn">Logout</a></li>
-                </ul>
+                <a href="pages/logout.php" class="logout-btn">Logout</a>
             </nav>
         </header>
         
@@ -24,13 +37,13 @@
                 <div class="card" style="background-image: url('images/ijaiye.jpg');">
                     <div class="card-content">
                         <h2>Ijaiye</h2>
-                        <a class="card-link">Get a Ticket.</a>
+                        <a href="Ijaiye.php" class="card-link">Get a Ticket.</a>
                     </div>
                 </div>
                 <div class="card" style="background-image: url('images/lakowe.jpg');">
                     <div class="card-content">
                         <h2>Lakowe</h2>
-                        <a href="lakowe.php" class="card-link">Get a Ticket.</a>
+                        <a href="Lakowe.php" class="card-link">Get a Ticket.</a>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 <?php
-session_start();
+// error_reporting(E_ALL); 
+// ini_set('display_errors', 1);
 include 'conn.php'; // Include the database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -35,6 +36,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $conn->real_escape_string($_POST['email']);
         $password = $conn->real_escape_string($_POST['password']);
 
+        // Password strength regex pattern
+        $strongPasswordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
+
+        // Validate password strength
+        if (!preg_match($strongPasswordPattern, $password)) {
+        echo "<script>alert('Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&).'); window.location.href = '../login.php';</script>";
+        exit;
+        }
+        
         // Check if the email already exists
         $sql = "SELECT email FROM users WHERE email = ?";
         $stmt = $conn->prepare($sql);
@@ -46,6 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<script>alert('Email already exists.'); window.location.href = '../login.php';</script>";
             $stmt->close();
             $conn->close();
+            exit;
+        }
+
+        // Check if the email domain is allowed
+        if (!endsWith($email, '@ecobank.com')) {
+            echo "<script>alert('Only emails from @ecobank.com domain are allowed.'); window.location.href = '../login.php';</script>";
             exit;
         }
 
@@ -80,5 +96,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
         $conn->close();
     }
+}
+
+function endsWith($haystack, $needle) {
+    $length = strlen($needle);
+    if ($length == 0) {
+        return true;
+    }
+    return (substr($haystack, -$length) === $needle);
 }
 ?>

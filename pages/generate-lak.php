@@ -3,7 +3,7 @@ include("conn.php");
 
 // Function to generate code
 function generateCode($conn) {
-    $sql = "SELECT MAX(code) as max_serial_no FROM codes";
+    $sql = "SELECT MAX(code) as max_serial_no FROM codes_lakowe";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $next_serial_no = $row['max_serial_no'] + 1;
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date_time = date("Y-m-d H:i:s");
 
     // Insert new code into database
-    $sql = "INSERT INTO codes (serial_no, name, code, date_time) VALUES (NULL, '$name', '$code', '$date_time')";
+    $sql = "INSERT INTO codes_lakowe (serial_no, name, code, date_time) VALUES (NULL, '$name', '$code', '$date_time')";
     if (mysqli_query($conn, $sql)) {
         echo "<script>alert('Code generated successfully: $code!'); window.location.href='../';</script>";
         exit();
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch user list from database
-$sql = "SELECT * FROM codes";
+$sql = "SELECT * FROM codes_lakowe";
 $result = mysqli_query($conn, $sql);
 $user_list_from_generate_php = [];
 if (mysqli_num_rows($result) > 0) {

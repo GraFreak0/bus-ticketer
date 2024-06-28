@@ -7,9 +7,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
+    // Password strength regex pattern
+    $strongPasswordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
+
     // Check if the passwords match
     if ($new_password !== $confirm_password) {
-        echo "<script>alert('Passwords do not match.'); window.location.href = 'login.php';</script>";
+        echo "<script>alert('Passwords do not match.'); window.location.href = '../reset.php';</script>";
+        exit;
+    }
+
+    // Validate password strength
+    if (!preg_match($strongPasswordPattern, $new_password)) {
+        echo "<script>alert('Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&).'); window.location.href = '../reset.php';</script>";
         exit;
     }
 
@@ -21,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->store_result();
 
     if ($stmt->num_rows == 0) {
-        echo "<script>alert('Email does not exist.'); window.location.href = 'login.php';</script>";
+        echo "<script>alert('Email does not exist.'); window.location.href = '../reset.php';</script>";
         $stmt->close();
         $conn->close();
         exit;
@@ -44,9 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($stmt->execute()) {
-        echo "<script>alert('Password reset successfully'); window.location.href = 'login.php';</script>";
+        echo "<script>alert('Password reset successfully'); window.location.href = '../login.php';</script>";
     } else {
-        echo "<script>alert('Error: " . $stmt->error . "'); window.location.href = '.login.php';</script>";
+        echo "<script>alert('Error updating password.'); window.location.href = '../reset.php';</script>";
     }
 
     $stmt->close();

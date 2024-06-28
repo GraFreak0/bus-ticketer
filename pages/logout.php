@@ -5,5 +5,5 @@ session_destroy();
 ?>
 <script>
 alert('User Logged out successfully');
-window.location.href='../';
+window.location.href='../login.php';
 </script>
