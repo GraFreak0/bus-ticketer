@@ -47,7 +47,7 @@ if ($current_time > $target_time_end) {
     <meta property="og:image" content="/images/title-icon.jpg">
     <meta property="og:url" content="https://bus-ticket.rf.gd/index.php">
     <link rel="icon" href="/images/logo.jpg" type="image/gif" />
-    <title> Ijaiye Bus Ticketing App</title>
+    <title> Lakowe | BusApp</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-8K7ZVZPkhG2VJQ9s/Adk65l67xw8J9hchxTWaPCv9V0W+v7JrM7yA0ZJjAVQfNW6RNwV5V6QujwTnC0w06yMzA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -56,7 +56,7 @@ if ($current_time > $target_time_end) {
 <body>
     <div class="container">
         <header class="header">
-            <h1>Ijaiye Bus Ticketing App</h1>
+            <h1>Lakowe BusApp</h1>
         </header>
         <h2>Ticket Generator</h2>
         <?php if (!$platform_accessible): ?>
