@@ -1,10 +1,10 @@
 <?php
 // session_start();
 include("pages/generate-lak.php");
-include("pages/init.php");
+// include("pages/init.php");
 
 // Check if the user is logged in
-checkLoggedIn();
+// checkLoggedIn();
 
 // Function to check if current time is between 5:00 PM and 7:00 PM
 function isPlatformAccessible() {

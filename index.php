@@ -7,10 +7,10 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-include("pages/init.php");
+// include("pages/init.php");
 
 // Check if the user is logged in
-checkLoggedIn();
+// checkLoggedIn();
 ?>
 
 <!DOCTYPE html>

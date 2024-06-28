@@ -2,10 +2,10 @@
 // error_reporting(E_ALL); 
 // ini_set('display_errors', 1);
 include("pages/generate.php");
-include("pages/init.php");
+// include("pages/init.php");
 
 // Check if the user is logged in
-checkLoggedIn();
+// checkLoggedIn();
 
 // Function to check if current time is between 5:00 PM and 7:00 PM
 function isPlatformAccessible() {
