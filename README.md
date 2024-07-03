@@ -2,6 +2,11 @@
 This application is PHP web application built to enable organization staff generate bus tickets from the comfort of their home/offices.
 This aids in reducing the closing rush hour by enabling conducive and steezeful movement towards the staff buses.
 
+### Development Resources
+- XAMPP Server - `localhost`
+- HTML, CSS and Javascript - `Frontend Development`
+- PHP - `Backend Development`
+
 ### Measures of Implementation
 - Platform will only be accessible by 5:00pm Africa/Lagos Time
 - Staff can only generate code once to stop staffs from generating code for other (Each bus passenger must personally book their ticket).
